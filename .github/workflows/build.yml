@@ -30,5 +30,11 @@ jobs:
       - name: Build package
         run: mvn -B package
 
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-manager-jar
+          path: target/*.jar
+
       - name: Generate Javadoc
         run: mvn -B javadoc:javadoc
