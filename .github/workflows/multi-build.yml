@@ -60,6 +60,26 @@ jobs:
       - name: Build package
         run: mvn -B package
 
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-manager-jar
+          path: target/*.jar
+
+  verify-artifact:
+    needs: package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: task-manager-jar
+          path: downloaded-artifact
+
+      - name: List downloaded files
+        run: ls -R downloaded-artifact
+
   integration-test:
     needs: package
     runs-on: ubuntu-latest
